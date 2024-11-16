@@ -1,11 +1,12 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class UserBase(BaseModel):
+    id: int
     nombre: str
     correo: str
 
 class UserCreate(UserBase):
-    pass
+    id: int = Field(..., example=1)
 
 class UserResponse(UserBase):
     id: int
