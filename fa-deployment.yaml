@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: fastapi-backend  # Nombre del contenedor
-          image: cristianbenavides/fastapi-backend:latest  # Imagen de tu aplicación FastAPI
+          image: cristianbenavides/fastapi-backend  # Imagen de tu aplicación FastAPI
           env:
             - name: DATABASE_URL
               value: "mysql://root:@mysql-service:3306/dbusers"
