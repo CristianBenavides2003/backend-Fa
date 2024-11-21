@@ -30,7 +30,7 @@ spec:
       - name: mysql
         image: mysql:8.0
         env:
-        - name: MYSQL_ROOT_PASSWORD
+        - name: "root"
           value: "" # Cambiar según las necesidades
         - name: MYSQL_DATABASE
           value: "usersdb" # Cambiar según las necesidades
