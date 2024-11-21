@@ -7,11 +7,10 @@ spec:
   selector:
     app: fastapi-backend
   ports:
-    
-port: 80
-    targetPort: 8000
-    nodePort: 32001  # Expone el puerto en el nodo
-type: NodePort  # Permite acceder al servicio desde fuera del clúster
+    - port: 80  # Puerto del servicio
+      targetPort: 8000  # Puerto del contenedor
+      nodePort: 32001  # Puerto en el nodo
+  type: NodePort  # Permite acceder al servicio desde fuera del clúster
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -29,12 +28,11 @@ spec:
         app: fastapi-backend
     spec:
       containers:
-        
-name: fastapi-backend
-        image: fastapi-backend  # Imagen de tu aplicación FastAPI
-        env:
-name: DATABASE_URL
-          value: "mysql://root:@mysql-service:3306/dbusers"
-      ports:
-containerPort: 8000  # Puerto expuesto del contenedor
-restartPolicy: Always  # Para que Kubernetes reinicie el contenedor si falla
+        - name: fastapi-backend  # Nombre del contenedor
+          image: fastapi-backend  # Imagen de tu aplicación FastAPI
+          env:
+            - name: DATABASE_URL
+              value: "mysql://root:@mysql-service:3306/dbusers"
+          ports:
+            - containerPort: 8000  # Puerto expuesto del contenedor
+      restartPolicy: Always  # Reinicia si falla
