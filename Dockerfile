@@ -2,18 +2,33 @@
 FROM python:3.11-alpine AS builder
 
 WORKDIR /app
+
+# Instalar dependencias necesarias para compilar Python y las librerías
+RUN apk add --no-cache gcc musl-dev libffi-dev python3-dev
+
+# Copiar archivo de requerimientos e instalar dependencias
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copiar el código fuente
 COPY . .
+
 # Segunda etapa: Runtime
 FROM python:3.11-alpine
 
 WORKDIR /app
+
+# Instalar dependencias en tiempo de ejecución
+RUN apk add --no-cache libffi
+
+# Copiar las librerías instaladas y el código desde la etapa de build
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
 COPY . .
 
-RUN pip install --no-cache-dir uvicorn
-
+# Configurar variables de entorno
 ENV PORT=8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT"]
+
+# Ejecutar la aplicación
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
