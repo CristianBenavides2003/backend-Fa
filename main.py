@@ -6,6 +6,7 @@ from config import crud
 from schema import schemas
 from model.user import User
 
+
 app =FastAPI()
 
 # Crear tablas
@@ -21,7 +22,7 @@ def get_db():
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3001"],  # Ajusta según el puerto de tu frontend
+    allow_origins=["*"],  # Ajusta según el puerto de tu frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
