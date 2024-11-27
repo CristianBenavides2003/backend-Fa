@@ -1,4 +1,5 @@
 from fastapi import APIRouter,Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from config.db import engine,SessionLocal
 from config import crud
